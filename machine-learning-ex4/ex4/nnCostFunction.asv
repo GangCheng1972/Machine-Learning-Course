@@ -101,15 +101,18 @@ J = sum(sum((-Y.*log(a3)-(1.0-Y).*log(1.-a3))))/m;
 % end
 
 %Calculate the delta in output layer 3 and hidden layer 2
-delta_3 = a3 - Y;
-
+delta_3 = a3 - y;
 delta_2 = delta_3*Theta2; 
 delta_2 = delta_2(:,2:end);
 delta_2 = delta_2 .* sigmoidGradient(z2);
 
-% Accumulate the gradient and divide by m
-Theta2_grad = delta_3'*a2 / m;
-Theta1_grad = delta_2'*a1 / m;
+
+Theta2_grad = delta_3'*a2;
+Theta1_grad = delta_2'*a1;
+
+% Step 5: divide the accumulated gradients by m
+Theta2_grad = Theta2_grad / m; 
+Theta1_grad = Theta1_grad / m; 
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
